@@ -1,0 +1,25 @@
+1. Requirements: Docker & Docker Compose with admin permissions
+
+2. Files Structure:
+
+.
+├── docker-compose.yml
+├── app/
+│   ├── trust_engine.py      # Główny silnik (Mahalanobis/Isolation Forest)
+│   └── requirements.txt     # numpy, pandas, scipy, scikit-learn
+└── README.md
+
+3. docker-compose up --build -d
+
+4. Open new terminal: docker logs -f node_a
+
+Wait, until Risk Score will stop on 0.00 (ending of learning phase).
+
+5. Attack simulation (latency injection)
+
+# injecting 100ms delay with jitter 20ms
+docker exec -it node_a tc qdisc add dev lo root netem delay 100ms 20ms
+
+6. Observe detection
+
+7. Stop the attack: docker exec -it node_a tc qdisc del dev lo root
