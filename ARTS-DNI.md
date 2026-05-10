@@ -83,7 +83,3 @@ ARTS-DNI treats network trust as a continuously evolving relational structure. B
 ## Reproducibility
 
 All experiments were conducted in a controlled Docker environment using deterministic seed initialization for reproducibility.
-
-### 🔗 Quick Links
-* **Full PDF Documentation**: [ARTS-DNI.pdf](./ARTS-DNI.pdf)
-* **Implementation**: [Check out the Python scripts in `/app`](./app)
