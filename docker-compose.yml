@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  node_b:
+    image: python:3.9-slim
+    container_name: node_b
+    volumes:
+      - .:/app
+    working_dir: /app
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    stdin_open: true # Pozwala utrzymać kontener przy życiu
+    tty: true
+    command: tail -f /dev/null # Zapobiega wyjściu kontenera
+    
+  attacker:
+    image: nicolaka/netshoot
+    container_name: attacker
+    privileged: true # To już masz, powinno działać
+    # ... reszta bez zmian
+
+  node_a:
+    image: nicolaka/netshoot
+    container_name: node_a
+    cap_add:
+      - NET_ADMIN # TO JEST KLUCZOWE
+    depends_on:
+      - attacker
+    networks:
+      trust_net:
+        ipv4_address: 172.20.0.4
+    command: tail -f /dev/null
+
+networks:
+  trust_net:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
